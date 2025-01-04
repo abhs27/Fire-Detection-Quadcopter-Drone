@@ -5,11 +5,11 @@
 
 ## **MENTORS**
 
-Abhinith D (DIODE)
+Abhinith D
 
-Jobin Jacob (DIODE)
+Jobin Jacob
 
-Pratheek Bandigedi (PISTON)
+Pratheek Bandigedi 
 
 ## **<span style="text-decoration:underline;">INTRODUCTION</span>**
 
@@ -54,7 +54,7 @@ Hardware: STM32 Microcontroller
 
 
 
-![alt_text](images/blockdiagram.jpg "image_tooltip")
+![alt_text](./images/blockdiagram.jpg "image_tooltip")
 
 
 ## **<span style="text-decoration:underline;">SOURCES AND REFERENCES</span>**
