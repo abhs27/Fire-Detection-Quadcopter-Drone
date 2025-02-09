@@ -4,7 +4,8 @@
 
 struct accel_val accel = {0.0,0.0,0.0};
 struct gyro_val gyro = {0.0,0.0,0.0};
-float offsetx,offsety,offsetz = 0.0;
+float gyro_offsetx,gyro_offsety,gyro_offsetz = 0.0;
+float accel_offsetx,accel_offsety,accel_offsetz = 0.0;
 
 extern I2C_HandleTypeDef hi2c1;
 
@@ -60,12 +61,38 @@ void mpu6050_init(void)
 		
 		mpu6050_read_gyro();
 		
-		if(gyro.Gx!=0)
-			offsetx=gyro.Gx;
-		if(gyro.Gy!=0)
-			offsety=gyro.Gy;
-		if(gyro.Gz!=0)
-			offsetz=gyro.Gz;
+		
+		
+		float gyro_bias_x=0.0;
+		float gyro_bias_y=0.0;
+		float gyro_bias_z=0.0;
+		
+		float accel_bias_x=0.0;
+		float accel_bias_y=0.0;
+		float accel_bias_z=0.0;
+		
+		
+		for(int i=0; i<100; i++){
+			mpu6050_read_gyro();
+			gyro_bias_x += gyro.Gx;
+			gyro_bias_y += gyro.Gy;
+			gyro_bias_z += gyro.Gz;
+			
+			mpu6050_read_accel();
+			accel_bias_x += accel.Ax;
+			accel_bias_y += accel.Ay;
+			accel_bias_z += accel.Az;
+			
+		}
+		
+		gyro_offsetx = gyro_bias_x/100;
+		gyro_offsety = gyro_bias_y/100;
+		gyro_offsetz = gyro_bias_z/100;
+		
+		accel_offsetx = accel_bias_x/100;
+		accel_offsety = accel_bias_y/100;
+		accel_offsetz = accel_bias_z/100;
+		
 		
 	}
 }
