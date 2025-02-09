@@ -25,7 +25,7 @@ struct accel_val
 
 extern struct accel_val accel;
 extern struct gyro_val gyro;
-extern float offsetx, offsety, offsetz;
+extern float gyro_offsetx, gyro_offsety, gyro_offsetz, accel_offsetx, accel_offsety, accel_offsetz;
 
 void mpu6050_read_accel(void);
 void mpu6050_read_gyro(void);
