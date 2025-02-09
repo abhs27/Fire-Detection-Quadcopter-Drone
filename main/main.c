@@ -117,13 +117,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-		//mpu6050_read_accel();
+		
 		mpu6050_read_gyro();
 		
-		sprintf(buf,"Gx=%f Gy=%f Gz=%f",gyro.Gx-offsetx,gyro.Gy-offsety,gyro.Gz);
+		sprintf(buf,"Gx=%f Gy=%f Gz=%f ",gyro.Gx, gyro.Gy, gyro.Gz);
+		//HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_13);
+		//HAL_Delay(200);
 		HAL_UART_Transmit(&huart2, (uint8_t *)buf,40,1000);
-		
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -249,12 +251,24 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED_PIN_GPIO_Port, LED_PIN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : LED_PIN_Pin */
+  GPIO_InitStruct.Pin = LED_PIN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LED_PIN_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
